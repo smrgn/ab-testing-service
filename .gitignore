@@ -1,0 +1,21 @@
+# игнорировать виртуальное окружение
+venv/
+
+# временные файлы и кеши
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+*.csv
+*.xlsx
+
+# VS Code конфиги 
+.vscode/
+
+# файлы из streamlit
+.streamlit/
+
+# docker volumes (если есть)
+pg_data/
