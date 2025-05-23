@@ -14,11 +14,11 @@ def render_results_screen():
     - Разделитель для csv - ';'
     """)
 
-    uploaded_file = st.file_uploader("Загрузите CSV или Excel с метриками", type=["csv", "xlsx"])
+    uploaded_file_result = st.file_uploader("Загрузите CSV или Excel с метриками", type=["csv", "xlsx"])
 
-    if uploaded_file:
+    if uploaded_file_result:
         try:
-            df = load_data(uploaded_file)
+            df = load_data(uploaded_file_result)
 
             st.subheader("Предпросмотр данных")
             st.dataframe(df.head(3))
