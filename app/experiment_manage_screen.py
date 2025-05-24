@@ -35,7 +35,7 @@ def render_experiment_management_screen():
             your_comment = st.text_area("Комментарий (необязательно)", help="Пример: Ожидаем повышение конверсии после изменения кнопки на главной странице.")
             
             # Выбор статуса эксперимента
-            result = "В процессе" if start_date > datetime.today().date() else "Дизайне"
+            result = "В процессе" if start_date > datetime.today().date() else "Дизайн"
             
             # Сохранение данных в базу данных
             if st.button("Создать эксперимент"):
@@ -50,16 +50,8 @@ def render_experiment_management_screen():
     if check_experiment_exists(experiment_id_delete):
         # Кнопка для удаления
         confirm_deletion = st.button(f"Удалить эксперимент с ID {experiment_id_delete}")
-        
         if confirm_deletion:
-            # Запрос на подтверждение удаления
-            confirm = st.radio("Вы уверены, что хотите удалить этот эксперимент?", ["Нет", "Да"], key="confirm_radio")
-            
-            # Выполнение удаления только при подтверждении
-            if confirm == "Да":
-                delete_experiment_from_db(experiment_id_delete)
-                st.success(f"Эксперимент с ID {experiment_id_delete} успешно удален!")
-            elif confirm == "Нет":
-                st.info("Удаление отменено.")
+            delete_experiment_from_db(experiment_id_delete)
+            st.success(f"Эксперимент с ID {experiment_id_delete} успешно удален!")
     else:
         st.error(f"Эксперимент с ID {experiment_id_delete} не найден.")

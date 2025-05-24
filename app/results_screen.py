@@ -23,13 +23,13 @@ def render_results_screen():
             st.subheader("Предпросмотр данных")
             st.dataframe(df.head(3))
 
-            test_type = st.radio("Выберите критерий", ["t-test", "z-test", "t-test с линеаризацией (для ratio)"])
+            # test_type = st.radio("Выберите критерий", ["t-test", "z-test", "t-test с линеаризацией (для ratio)"])
 
-            if 'group' in df.columns and 'metric' in df.columns:
+            if 'group_id' in df.columns and 'metric_id' in df.columns and 'num' in df.columns:
                 st.subheader("📈 Анализ различий между группами")
                 if st.button('Рассчитать результаты'):
                     p_value = 0
-                    stats, p_value, a, b = run_ab_test(df, test_type)
+                    stats, p_value, a, b = run_ab_test(df)
                     if p_value <= 0.05 and b - a > 0:
                         st.success(f'Различия статистически значимы')
                     elif p_value <= 0.05 and b - a < 0:

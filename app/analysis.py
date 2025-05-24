@@ -72,24 +72,24 @@ def aa_test_mean(df, n_sim=10000):
     return p_count, p_rate, alpha_ci
 
 # Расчет результатов А/B-теста
-def run_ab_test(df, test_type='t-test'):
-    group_a = df[df['group'] == 0]['metric']
-    group_b = df[df['group'] == 1]['metric']
+def run_ab_test(df):
+    group_a = df[df['group_id'] == 0]['num']
+    group_b = df[df['group_id'] == 1]['num']
 
-    if test_type == 't-test с линеаризацией (для ratio)': 
-        group_a_num = df[df['group'] == 0]['num']
-        group_a_denom = df[df['group'] == 0]['denom']
-        group_b_num = df[df['group'] == 1]['num']
-        group_b_denom = df[df['group'] == 1]['denom']
+    if df['metric_id'].iloc[0] == 3: 
+        group_a_num = df[df['group_id'] == 0]['num']
+        group_a_denom = df[df['group_id'] == 0]['denom']
+        group_b_num = df[df['group_id'] == 1]['num']
+        group_b_denom = df[df['group_id'] == 1]['denom']
         metric_a = group_a_num / group_a_denom
 
         stat, p_value = ss.ttest_ind((group_a_num - metric_a * group_a_denom), \
                                      (group_b_num - metric_a * group_b_denom), equal_var=False)
 
-    elif test_type == 't-test':
+    elif df['metric_id'].iloc[0] == 2:
         stat, p_value = ss.ttest_ind(group_a, group_b, equal_var=False)
 
-    elif test_type == 'z-test':
+    elif df['metric_id'].iloc[0] == 1:
         stat, p_value = sms.proportions_ztest(count = [group_a.sum(), group_b.sum()],
                             nobs = [len(group_a), len(group_b)])
     
